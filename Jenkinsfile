@@ -8,7 +8,6 @@ pipeline{
     }
 
     stages{
-
         stage("Clone and Unittest"){
             agent{label: "test-sdpx2"}
             steps{
@@ -26,7 +25,13 @@ pipeline{
                 echo "Building the Repository"
                 sh "docker build -t ${IMAGE_NAME}"
                 sh "docker run -p 5000:5000 ${IMAGE_NAME} --name ${APP_NAME}"
-                sh "docker login ghcr.io --username --password "
+                
+                echo "logging in..."
+                withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh """
+                        echo "${DOCKER_PASS}" | docker login ghcr.io -u "${DOCKER_USER}" --password-stdin
+                    """
+                }
                 sh "docker push ${IMAGE_NAME}"
             }
         }
@@ -60,15 +65,8 @@ pipeline{
                 sh "docker pull ${IMAGE_NAME}"
                 
                 echo "Running Preprod Container"
-                sh "docker run ${IMAGE_NAME} --name ${APP_NAME} -p 500:5000"
+                sh "docker run ${IMAGE_NAME} --name ${APP_NAME} -p 5000:5000"
                 echo "Container Created!!!"
-            }
-        }
-
-        stage("load testing with Jmeter"){
-            agent{label: "preprod-sdpx3"}
-            steps{
-                echo "Load testing"
             }
         }
     }
