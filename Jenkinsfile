@@ -26,6 +26,15 @@ pipeline {
             }
         }
 
+        stage('Build and Run Container') {
+            agent { label 'test-sdpx2'}
+            steps {
+                echo 'Building the Repository'
+                sh "cd Jenkins-Assignment/src && docker build -t ${IMAGE_NAME} ."
+                sh "docker run -d --name ${APP_NAME} -p 5000:5000 ${IMAGE_NAME} "
+            }
+        }
+
         stage('Run Robot Test') {
             agent { label 'test-sdpx2' }
             steps {
@@ -45,13 +54,9 @@ pipeline {
             }
         }
 
-        stage('Build and Push to Registry') {
-            agent { label 'test-sdpx2'}
-            steps {
-                echo 'Building the Repository'
-                sh "cd Jenkins-Assignment/src && docker build -t ${IMAGE_NAME} ."
-                sh "docker run -d --name ${APP_NAME} -p 5000:5000 ${IMAGE_NAME} "
-
+        stage("Push to Registry"){
+            agent {label 'test-sdpx2'}
+            steps{
                 echo 'logging in...'
                 withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh """
