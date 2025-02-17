@@ -40,7 +40,8 @@ pipeline {
                 }
                 echo 'Running Robot Framework Test'
                 sh "mkdir -p /home/student/robot_results"
-                sh 'cd Robot_Jenkins && pip install -r requirements.txt && python3 -m robot --outputdir /home/student/robot_results apitest.robot'
+                
+                sh 'cd Robot_Jenkins && pip install -r requirements.txt && python3 -m robot --outputdir ../robot_result apitest.robot'
             }
         }
 
@@ -89,4 +90,6 @@ pipeline {
                 sh "docker run -d -p 5000:5000 --name ${APP_NAME} ${IMAGE_NAME} "
                 echo 'Container Created!!!'
             }
-   
+        }
+    }
+}
