@@ -14,8 +14,7 @@ pipeline{
                 echo "Clone the api directory"
                 sh "git clone ${API_REPO}"
                 echo "Running Unit test"
-                sh "cd Jenkins-Assignment/src && pip install -r requirements.txt"
-                sh "python3 test_flask.py"
+                sh "cd Jenkins-Assignment/src && pip install -r requirements.txt && python3 test_flask.py"
             }
         }
 
@@ -42,8 +41,7 @@ pipeline{
                 echo "Cloning Robot Repository"
                 sh "git clone ${ROBOT_REPO}"
                 echo "Running Robot Framework Test"
-                sh "cd Robot_Jenkins && pip install -r requirements.txt"
-                sh "robot apitest.robot"
+                sh "cd Robot_Jenkins && pip install -r requirements.txt && robot apitest.robot"
             }
         }
 
