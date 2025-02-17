@@ -9,7 +9,7 @@ pipeline{
 
     stages{
         stage("Clone and Unittest"){
-            agent {label: "test-sdpx2"}
+            agent {label "test-sdpx2"}
             steps {
                 echo "Clone the api directory"
                 sh "git clone ${API_REPO}"
@@ -20,7 +20,7 @@ pipeline{
         }
 
         stage("Build and Push to Registry"){
-            agent {label: "test-sdpx2"}
+            agent {label "test-sdpx2"}
             steps {
                 echo "Building the Repository"
                 sh "docker build -t ${IMAGE_NAME}"
@@ -37,7 +37,7 @@ pipeline{
         }
 
         stage("Run Robot Test"){
-            agent {label: "test-sdpx2"}
+            agent {label "test-sdpx2"}
             steps {
                 echo "Cloning Robot Repository"
                 sh "git clone ${ROBOT_REPO}"
@@ -49,7 +49,7 @@ pipeline{
 
         stage("Stop Docker and prune"){
             agent {
-                label: "test-sdpx2"
+                label "test-sdpx2"
             }
             steps {
                 echo "Stopping Docker container"
@@ -59,7 +59,7 @@ pipeline{
         }
 
         stage("Pull Image from registry"){
-            agent {label: "preprod-sdpx3"}
+            agent {label "preprod-sdpx3"}
             steps {
                 echo "Pulling Image from registry"
                 sh "docker pull ${IMAGE_NAME}"
