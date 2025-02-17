@@ -1,5 +1,5 @@
 pipeline{
-    agent {label 'test-sdpx2'}
+    agent {label 'preprod-sdpx3'}
     environment{
         APP_NAME="test app name"
     }
