@@ -46,8 +46,15 @@ pipeline {
         stage('Run Robot Test') {
             agent { label 'test-sdpx2' }
             steps {
-                echo 'Cloning Robot Repository'
-                sh "git clone ${ROBOT_REPO}"
+                script {
+                    if (fileExists('Robot_Jenkins')) {
+                        echo 'Repository exists, pulling latest changes...'
+                        sh 'cd Robot_Jenkins && git pull'
+            } else {
+                        echo 'Cloning the ROBOT repository...'
+                        sh "git clone ${ROBOT_REPO}"
+                    }
+                }
                 echo 'Running Robot Framework Test'
                 sh 'cd Robot_Jenkins && pip install -r requirements.txt && python3 -m robot apitest.robot'
             }
