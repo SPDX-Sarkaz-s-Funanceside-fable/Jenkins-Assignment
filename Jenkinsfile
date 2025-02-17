@@ -21,18 +21,17 @@ pipeline {
                         sh "git clone ${API_REPO}"
                     }
                 }
-
                 echo 'Running Unit test'
                 sh 'cd Jenkins-Assignment/src && pip install -r requirements.txt && python3 test_flask.py'
             }
         }
 
         stage('Build and Push to Registry') {
-            agent { label 'test-sdpx2' }
+            agent { label 'test-sdpx2'}
             steps {
                 echo 'Building the Repository'
                 sh "docker build -t ${IMAGE_NAME}"
-                sh "docker run -p 5000:5000 ${IMAGE_NAME} --name ${APP_NAME}"
+                sh "docker run -p 5000:5000 ${IMAGE_NAME} --name ${APP_NAME} ."
 
                 echo 'logging in...'
                 withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
