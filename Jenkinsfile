@@ -26,6 +26,23 @@ pipeline {
             }
         }
 
+        stage('Run Robot Test') {
+            agent { label 'test-sdpx2' }
+            steps {
+                script {
+                    if (fileExists('Robot_Jenkins')) {
+                        echo 'Repository exists, pulling latest changes...'
+                        sh 'cd Robot_Jenkins && git pull'
+            } else {
+                        echo 'Cloning the ROBOT repository...'
+                        sh "git clone ${ROBOT_REPO}"
+                    }
+                }
+                echo 'Running Robot Framework Test'
+                sh 'cd Robot_Jenkins && pip install -r requirements.txt && python3 -m robot --outputdir robot_result apitest.robot'
+            }
+        }
+
         stage('Build and Push to Registry') {
             agent { label 'test-sdpx2'}
             steps {
@@ -43,22 +60,7 @@ pipeline {
             }
         }
 
-        stage('Run Robot Test') {
-            agent { label 'test-sdpx2' }
-            steps {
-                script {
-                    if (fileExists('Robot_Jenkins')) {
-                        echo 'Repository exists, pulling latest changes...'
-                        sh 'cd Robot_Jenkins && git pull'
-            } else {
-                        echo 'Cloning the ROBOT repository...'
-                        sh "git clone ${ROBOT_REPO}"
-                    }
-                }
-                echo 'Running Robot Framework Test'
-                sh 'cd Robot_Jenkins && pip install -r requirements.txt && python3 -m robot apitest.robot'
-            }
-        }
+
 
         stage('Stop Docker and prune') {
             agent {
