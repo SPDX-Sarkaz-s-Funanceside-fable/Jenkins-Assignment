@@ -30,7 +30,7 @@ pipeline {
             agent { label 'test-sdpx2'}
             steps {
                 echo 'Building the Repository'
-                sh "docker build -t ${IMAGE_NAME} ."
+                sh "Jenkins-Assignment/src && docker build -t ${IMAGE_NAME} ."
                 sh "docker run -p 5000:5000 ${IMAGE_NAME} --name ${APP_NAME}"
 
                 echo 'logging in...'
