@@ -74,11 +74,16 @@ pipeline {
         stage('Pull Image from registry') {
             agent { label 'preprod-sdpx3' }
             steps {
+                echo "loggin in..."
+                    withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh """
+                        echo "${DOCKER_PASS}" | docker login ghcr.io -u "${DOCKER_USER}" --password-stdin
+                    """
+                }
                 echo 'Pulling Image from registry'
                 sh "docker pull ${IMAGE_NAME}"
-
                 echo 'Running Preprod Container'
-                sh "docker run ${IMAGE_NAME} --name ${APP_NAME} -p 5000:5000"
+                sh "docker run -d -p 5000:5000 --name ${APP_NAME} ${IMAGE_NAME} "
                 echo 'Container Created!!!'
             }
         }
