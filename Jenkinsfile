@@ -12,7 +12,13 @@ pipeline{
             agent {label "test-sdpx2"}
             steps {
                 echo "Clone the api directory"
+                if (fileExists('Jenkins-Assignment')) {
+                echo "Repository exists, pulling latest changes..."
+                sh "cd Jenkins-Assignment && git pull"
+            } else {
+                echo "Cloning the API repository..."
                 sh "git clone ${API_REPO}"
+            }
                 echo "Running Unit test"
                 sh "cd Jenkins-Assignment/src && pip install -r requirements.txt && python3 test_flask.py"
             }
