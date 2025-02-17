@@ -49,7 +49,7 @@ pipeline {
                 echo 'Cloning Robot Repository'
                 sh "git clone ${ROBOT_REPO}"
                 echo 'Running Robot Framework Test'
-                sh 'cd Robot_Jenkins && pip install -r requirements.txt && robot apitest.robot'
+                sh 'cd Robot_Jenkins && pip install -r requirements.txt && python3 -m robot apitest.robot'
             }
         }
 
