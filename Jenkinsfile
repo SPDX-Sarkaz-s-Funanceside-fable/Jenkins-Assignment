@@ -31,7 +31,7 @@ pipeline {
             steps {
                 echo 'Building the Repository'
                 sh "cd Jenkins-Assignment/src && docker build -t ${IMAGE_NAME} ."
-                sh "docker run -p 5000:5000 ${IMAGE_NAME} --name ${APP_NAME}"
+                sh "docker run -d --name ${APP_NAME} -p 5000:5000 ${IMAGE_NAME} "
 
                 echo 'logging in...'
                 withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
