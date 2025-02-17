@@ -2,7 +2,7 @@ pipeline {
     agent none
     environment {
         IMAGE_NAME = 'ghcr.io/spdx-sarkaz-s-funanceside-fable/api:latest'
-        APP_NAME = 'plus API'
+        APP_NAME = 'plus_api'
         API_REPO = 'https://github.com/SPDX-Sarkaz-s-Funanceside-fable/Jenkins-Assignment.git'
         ROBOT_REPO = 'https://github.com/SPDX-Sarkaz-s-Funanceside-fable/Robot_Jenkins.git'
     }
