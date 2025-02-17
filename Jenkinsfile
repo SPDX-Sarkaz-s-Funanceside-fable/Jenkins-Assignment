@@ -9,8 +9,8 @@ pipeline{
 
     stages{
         stage("Clone and Unittest"){
-            agent{label: "test-sdpx2"}
-            steps{
+            agent {label: "test-sdpx2"}
+            steps {
                 echo "Clone the api directory"
                 sh "git clone ${API_REPO}"
                 echo "Running Unit test"
@@ -20,12 +20,12 @@ pipeline{
         }
 
         stage("Build and Push to Registry"){
-            agent{label: "test-sdpx2"}
-            steps{
+            agent {label: "test-sdpx2"}
+            steps {
                 echo "Building the Repository"
                 sh "docker build -t ${IMAGE_NAME}"
                 sh "docker run -p 5000:5000 ${IMAGE_NAME} --name ${APP_NAME}"
-                
+
                 echo "logging in..."
                 withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh """
@@ -37,8 +37,8 @@ pipeline{
         }
 
         stage("Run Robot Test"){
-            agent{label: "test-sdpx2"}
-            steps{
+            agent {label: "test-sdpx2"}
+            steps {
                 echo "Cloning Robot Repository"
                 sh "git clone ${ROBOT_REPO}"
                 echo "Running Robot Framework Test"
@@ -48,10 +48,10 @@ pipeline{
         }
 
         stage("Stop Docker and prune"){
-            agent{
+            agent {
                 label: "test-sdpx2"
             }
-            steps{
+            steps {
                 echo "Stopping Docker container"
                 sh "docker stop ${APP_NAME}"
                 sh 'docker system prune -a -f'
@@ -59,8 +59,8 @@ pipeline{
         }
 
         stage("Pull Image from registry"){
-            agent{label: "preprod-sdpx3"}
-            steps{
+            agent {label: "preprod-sdpx3"}
+            steps {
                 echo "Pulling Image from registry"
                 sh "docker pull ${IMAGE_NAME}"
                 
