@@ -83,12 +83,24 @@ pipeline {
         stage('Pull Image from registry') {
             agent { label 'preprod-sdpx3' }
             steps {
-                echo "loggin in..."
+                script {
+                    echo "Checking if Docker container '${APP_NAME}' is running..."
+                    def isRunning = sh(script: "docker ps --filter 'name=${APP_NAME}' --format '{{.Names}}'", returnStdout: true).trim()
+
+                    if (isRunning) {
+                        echo "Stopping and removing existing container: ${APP_NAME}"
+                        sh "docker stop ${APP_NAME}"
+                        sh "docker rm ${APP_NAME}"
+                } else {
+                        echo "Container '${APP_NAME}' is not running. Skipping removal."
+                    }
+                }
+                echo 'loggin in...'
                     withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh """
                         echo "${DOCKER_PASS}" | docker login ghcr.io -u "${DOCKER_USER}" --password-stdin
                     """
-                }
+                    }
                 echo 'Pulling Image from registry'
                 sh "docker pull ${IMAGE_NAME}"
                 echo 'Running Preprod Container'
