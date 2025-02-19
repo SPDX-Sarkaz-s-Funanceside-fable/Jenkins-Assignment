@@ -74,6 +74,9 @@ pipeline {
         stage('Pull Image from registry') {
             agent { label 'preprod-sdpx3' }
             steps {
+                echo 'Stopping Docker container'
+                sh "docker stop ${APP_NAME}"
+                sh 'docker system prune -a -f'
                 echo "loggin in..."
                     withCredentials([usernamePassword(credentialsId: '49f9bc0f-974f-48da-bc43-c5abb21d228c', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh """
