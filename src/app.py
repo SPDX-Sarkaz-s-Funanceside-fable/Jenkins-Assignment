@@ -29,7 +29,18 @@ def plus(a,b):
         return jsonify({"Result is": a+b})
     except ValueError:
         return jsonify({"error": "Invalid number format"}), 404 
+    
+@app.route("/palindrome/<a>", methods=["GET"])
+def palindrome(a):
+    try:
+        a = str(a)
+        if a == a[::-1]:
+            return "True"
+        else:
+            return "False"
+    except ValueError:
+        return "Error"
         
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5001)
