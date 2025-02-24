@@ -50,6 +50,18 @@ class TestAPI(unittest.TestCase):
         response = self.client.get("palindrome/abba")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.decode("utf-8"), "True")
+    
+    def test_when_x_is_abc(self):
+        response = self.client.get("samechar/abc")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.decode("utf-8"), "True")
+
+    def test_when_x_is_abbc(self):
+        response = self.client.get("samechar/abbc")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.decode("utf-8"), "False")
+    
+
 
 if __name__ == "__main__":
     unittest.main()

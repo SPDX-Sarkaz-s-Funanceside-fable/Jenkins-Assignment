@@ -64,6 +64,19 @@ def factorial(a):
         return jsonify({"error": "Invalid number format"}), 404 
     
 
+@app.route("/samechar/<a>", methods=["GET"])
+def samechar(a):
+    try:
+        character = set(a)
+        if len(character) == len(a):
+            return "True"
+        else:
+            return "False"
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404
+
+    
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
