@@ -10,6 +10,11 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['Result is'], 7)
     
+    def test_plus2(self):
+        response = self.client.get("/plus/5/5")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], 10)
+    
     def test_when_x_is_17(self):
         response = self.client.get("/is_prime/17")
         self.assertEqual(response.status_code, 200)
