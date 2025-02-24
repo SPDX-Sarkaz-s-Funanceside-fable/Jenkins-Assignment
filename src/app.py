@@ -38,6 +38,24 @@ def plus(a,b):
         return jsonify({"Result is": a+b})
     except ValueError:
         return jsonify({"error": "Invalid number format"}), 404
+    
+
+@app.route('/factorial/<a>', methods=["GET"])
+def factorial(a):
+    try:
+        a = int(a)
+        if a <= 1:
+            return "False"
+        
+        ans = 1
+        for i in range (2, a + 1):
+            ans *= i
+        
+        return jsonify({"Result is": ans})
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404 
+    
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
