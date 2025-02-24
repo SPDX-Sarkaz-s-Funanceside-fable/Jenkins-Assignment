@@ -20,6 +20,15 @@ def is_prime(a):
         return "True"
     except ValueError:
         return "Error"
+    
+@app.route('/Ascii/<a>', methods=["GET"])
+def Ascii(a):
+    try:
+        a = ord(a)
+        return jsonify({"Result is": a})
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404
+
             
 
 @app.route("/plus/<a>/<b>", methods=["GET"])
