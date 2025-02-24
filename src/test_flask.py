@@ -9,6 +9,11 @@ class TestAPI(unittest.TestCase):
         response = self.client.get("/plus/4/3")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['Result is'], 7)
+
+    def test_fac(self):
+        response = self.client.get("/factorial/7")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], 5040)
     
     def test_plus2(self):
         response = self.client.get("/plus/5/5")
