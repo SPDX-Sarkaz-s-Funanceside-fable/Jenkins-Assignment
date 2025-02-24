@@ -56,11 +56,9 @@ def factorial(a):
         a = int(a)
         if a <= 1:
             return "False"
-        
         ans = 1
         for i in range (2, a + 1):
             ans *= i
-        
         return jsonify({"Result is": ans})
     except ValueError:
         return jsonify({"error": "Invalid number format"}), 404 
@@ -68,4 +66,4 @@ def factorial(a):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5001)

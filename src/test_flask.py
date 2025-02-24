@@ -47,7 +47,7 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.data.decode("utf-8"), "True")
 
     def test_when_x_is_abba(self):
-        response = self.client.get("/abba")
+        response = self.client.get("palindrome/abba")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.decode("utf-8"), "True")
 
