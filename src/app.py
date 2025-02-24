@@ -20,6 +20,21 @@ def is_prime(a):
         return "True"
     except ValueError:
         return "Error"
+    
+@app.route('/factorial/<a>', methods=["GET"])
+def factorial(a):
+    try:
+        a = int(a)
+        if a <= 1:
+            return "False"
+        
+        ans = 1
+        for i in range (2, a + 1):
+            ans *= i
+        
+        return jsonify({"Result is": ans})
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404 
             
 
 @app.route("/plus/<a>/<b>", methods=["GET"])
