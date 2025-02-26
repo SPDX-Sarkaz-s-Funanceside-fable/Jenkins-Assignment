@@ -108,6 +108,15 @@ def is_odd(a):
             return "True"
     except ValueError:
         return jsonify({"error": "Invalid number format"}), 404
+    
+
+@app.route("/multiple/<a>/<b>", methods=["GET"])
+def multiple(a,b):
+    try:
+        a, b = int(a), int(b)
+        return jsonify({"Result is": a*b})
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
