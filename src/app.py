@@ -128,6 +128,18 @@ def divide(a,b):
             return jsonify({"error": "cannot divided by 0"})
     except ValueError:
         return jsonify({"error": "Invalid number format"}), 404
+    
+@app.route("/cir_area/<x>")
+def cir_area(x):
+    try:
+        x = float(x)
+        if x<  0 :
+            return jsonify({"Result is": f"{0:.2f}"})
+        else:
+            result = x*x*3.14
+            return jsonify({"Result is":f"{result:.2f}" })
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)

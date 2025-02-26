@@ -102,6 +102,21 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['Result is'], 2)
 
+    def test_x_is_1(self):
+        response = self.client.get("/cir_area/1")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], "3.14")
+
+    def test_x_is_neg10(self):
+        response = self.client.get("/cir_area/-10")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], "0.00")
+
+    def test_x_is_1dot5(self):
+        response = self.client.get("/cir_area/1.5")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], "7.07")
+
 
 if __name__ == "__main__":
     unittest.main()
