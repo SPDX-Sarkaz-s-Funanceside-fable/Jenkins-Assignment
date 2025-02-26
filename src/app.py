@@ -37,7 +37,15 @@ def plus(a,b):
         a, b = int(a), int(b)
         return jsonify({"Result is": a+b})
     except ValueError:
-        return jsonify({"error": "Invalid number format"}), 404 
+        return jsonify({"error": "Invalid number format"}), 404
+    
+@app.route("/minus/<a>/<b>", methods=["GET"])
+def minus(a,b):
+    try:
+        a, b = int(a), int(b)
+        return jsonify({"Result is": a-b})
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404
     
 @app.route("/palindrome/<a>", methods=["GET"])
 def palindrome(a):
