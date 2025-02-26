@@ -60,7 +60,12 @@ class TestAPI(unittest.TestCase):
         response = self.client.get("samechar/abbc")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.decode("utf-8"), "False")
-    
+
+    def test_minus1(self):
+        response = self.client.get("/minus/4/3")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], 1)
+
 
 
 if __name__ == "__main__":
