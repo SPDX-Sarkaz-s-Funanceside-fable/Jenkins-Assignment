@@ -83,7 +83,20 @@ def samechar(a):
     except ValueError:
         return jsonify({"error": "Invalid number format"}), 404
 
-    
+@app.route('/is_even/<a>', methods=["GET"])
+def is_even(a):
+    try:
+        a = int(a)
+        if a <= 1:
+            return "False"
+
+        
+        if a % 2 == 1:
+            return "False"
+        
+        return "True"
+    except ValueError:
+        return "Error"
 
 
 if __name__ == '__main__':

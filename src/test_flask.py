@@ -66,6 +66,15 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['Result is'], 1)
 
+    def test_when_x_is_2(self):
+        response = self.client.get("/is_even/2")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.decode("utf-8"), "True")
+
+    def test_when_x_is_3(self):
+        response = self.client.get("/is_even/3")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.decode("utf-8"), "False")
 
 
 if __name__ == "__main__":
