@@ -75,6 +75,21 @@ class TestAPI(unittest.TestCase):
         response = self.client.get("/is_even/3")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.decode("utf-8"), "False")
+    
+    def test_is_odd_3(self):
+        response = self.client.get("/is_odd/3")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.decode("utf-8"), "True")
+
+    def test_is_odd_4(self):
+        response = self.client.get("/is_odd/4")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.decode("utf-8"), "False")
+
+    def test_is_odd_d(self):
+        response = self.client.get("/is_odd/d")
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json['error'], 'Invalid number format')
 
 
 if __name__ == "__main__":
