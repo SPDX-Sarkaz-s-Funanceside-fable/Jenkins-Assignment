@@ -98,6 +98,16 @@ def is_even(a):
     except ValueError:
         return "Error"
 
+@app.route('/is_odd/<a>', methods=["GET"])
+def is_odd(a):
+    try:
+        a = int(a)
+        if a < 1 or a % 2 == 0:
+            return "False"
+        else:
+            return "True"
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
