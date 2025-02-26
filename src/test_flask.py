@@ -92,6 +92,12 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.json['error'], 'Invalid number format')
 
 
+    def test_multiple1(self):
+        response = self.client.get("/multiple/4/3")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], 12)
+
+
 if __name__ == "__main__":
     unittest.main()
     
