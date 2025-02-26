@@ -97,6 +97,11 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json['Result is'], 12)
 
+    def test_divide1(self):
+        response = self.client.get("/divide/4/2")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['Result is'], 2)
+
 
 if __name__ == "__main__":
     unittest.main()

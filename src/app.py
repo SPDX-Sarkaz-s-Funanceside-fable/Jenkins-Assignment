@@ -117,6 +117,17 @@ def multiple(a,b):
         return jsonify({"Result is": a*b})
     except ValueError:
         return jsonify({"error": "Invalid number format"}), 404
+    
+@app.route("/divide/<a>/<b>")
+def divide(a,b):
+    try:
+        a, b = int(a), int(b)
+        if b > 0 :
+            return jsonify({"Result is": a/b})
+        else:
+            return jsonify({"error": "cannot divided by 0"})
+    except ValueError:
+        return jsonify({"error": "Invalid number format"}), 404
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
